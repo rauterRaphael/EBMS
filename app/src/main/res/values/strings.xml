@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EBMS</string>
+    <string name="title_main">Home</string>
+    <string name="title_system">System</string>
+    <string name="title_stats">Statistics</string>
+    <string name="btn_newReport">NEW REPORT</string>
+    <string name="btn_editReport">EDIT</string>
+    <string name="btn_deleteReport">DELETE</string>
+    <string name="btn_exportReport">EXPORT</string>
+</resources>
