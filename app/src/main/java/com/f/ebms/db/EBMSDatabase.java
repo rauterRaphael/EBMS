@@ -1,14 +1,10 @@
-package com.f.ebms;
+package com.f.ebms.db;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.File;
-
-import javax.xml.transform.Result;
+import com.f.ebms.db.dbObjects.BikePart;
 
 public class EBMSDatabase {
 
@@ -88,13 +84,19 @@ public class EBMSDatabase {
                 "Kennzeichen"
         };
         try{
+
             this.ebmsDB.execSQL("CREATE TABLE parts (name VARCHAR)");
-            for(String part:defaultParts)
-                this.ebmsDB.execSQL("INSERT INTO parts (name) VALUES (" + part + ");");
+            //db.execSQL("create table " + TABLE__WORK + " (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, bikePart V, Title TEXT, Time TEXT, Date TEXT)")
+            for(String part:defaultParts){
+                String bikePartJson = DBObjectConverter.convertBikePartToJson(new BikePart(part));
+
+            }
+                //this.ebmsDB.execSQL("INSERT INTO parts (name) VALUES (" + part + ");");
 
         }catch (Exception e){
             Log.e(LOG_TAG, "loadDefaultPartsData() - Exception: " + e.toString());
         }
     }
+
 
 }
