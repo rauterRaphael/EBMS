@@ -14,6 +14,10 @@ public class BikePart {
         this.notes = "";
     }
 
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+
     public String getPartName() {
         return partName;
     }
