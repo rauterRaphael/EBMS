@@ -5,6 +5,9 @@ import com.f.ebms.db.dbObjects.Report;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Arrays;
+import java.util.HashMap;
+
 public class DBObjectConverter {
 
     public static String convertReportToJson(Report report) {
@@ -20,8 +23,12 @@ public class DBObjectConverter {
         return new GsonBuilder().create().toJson(bikePart, BikePart.class);
     }
 
-    public static BikePart getBikePartFromJson(String jsonObject)
-    {
+    public static BikePart getBikePartFromJson(String jsonObject) {
         return new Gson().fromJson(jsonObject, BikePart.class);
+    }
+
+    public static BikePart[] convertBikePartHshMpToArray(HashMap<Integer, BikePart> bikeParts) {
+        Object[] bikePartsObject = bikeParts.values().toArray();
+        return Arrays.copyOf(bikePartsObject, bikePartsObject.length, BikePart[].class);
     }
 }

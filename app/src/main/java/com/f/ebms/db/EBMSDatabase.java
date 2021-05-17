@@ -132,11 +132,12 @@ public class EBMSDatabase {
 
             c.moveToFirst();
 
-            while (c != null) {
-                this.allReports.put(c.getInt(idIdx), DBObjectConverter.getReportFromJson(c.getString(reportIdx)));
-                c.moveToNext();
+            if (c.getCount() > 0) {
+                // TODO: last idx object is missing
+                while (c.moveToNext()) {
+                    this.allReports.put(c.getInt(idIdx), DBObjectConverter.getReportFromJson(c.getString(reportIdx)));
+                }
             }
-
         } catch (Exception e) {
             Log.e(LOG_TAG, "getAllReportObjects() - Exception: " + e.toString());
         }
@@ -151,13 +152,14 @@ public class EBMSDatabase {
 
             c.moveToFirst();
 
-            while (c != null) {
-                this.allBikeParts.put(c.getInt(idIdx), DBObjectConverter.getBikePartFromJson(c.getString(partIdx)));
-                c.moveToNext();
+            if (c.getCount() > 0) {
+                // TODO: last idx object is missing
+                while (c.moveToNext()) {
+                    this.allBikeParts.put(c.getInt(idIdx), DBObjectConverter.getBikePartFromJson(c.getString(partIdx)));
+                }
             }
-
         } catch (Exception e) {
-            Log.e(LOG_TAG, "getAllReportObjects() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "getAllBikePartObjects() - Exception: " + e.toString());
         }
     }
 
