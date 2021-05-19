@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">EBMS</string>
-    <string name="title_main">Home</string>
-    <string name="title_system">System</string>
-    <string name="title_stats">Statistics</string>
-    <string name="btn_newReport">NEW REPORT</string>
-    <string name="btn_editReport">EDIT</string>
-    <string name="btn_deleteReport">DELETE</string>
-    <string name="btn_exportReport">EXPORT</string>
+
+    <string name="main_btn_newReport">NEW REPORT</string>
+    <string name="main_btn_reports">REPORTS</string>
+    <string name="main_btn_parts">PARTS</string>
+    <string name="main_btn_statistics">STATISTICS</string>
+
+    <string name="newreport_textview_name">Create new report</string>
+    <string name="reportlist_textview_name">Reports</string>
+    <string name="partslist_textview_name">Parts</string>
+    <string name="statistics_textview_name">Statistics</string>
+
 </resources>

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.f.ebms.db.dbObjects.BikePart;
@@ -35,7 +37,7 @@ public class EBMSDatabase {
             getAllReportObjects();
 
         }catch (Exception e){
-            Log.e(LOG_TAG, "Database() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - Database() - Exception: " + e.toString());
         }
     }
 
@@ -48,7 +50,7 @@ public class EBMSDatabase {
                 return false;
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "checkIfPartsTableInitialized() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - checkIfPartsTableInitialized() - Exception: " + e.toString());
         }
         return true;
     }
@@ -111,15 +113,17 @@ public class EBMSDatabase {
             }
 
         } catch (Exception e) {
-            Log.e(LOG_TAG, "loadDefaultPartsData() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - loadDefaultPartsData() - Exception: " + e.toString());
         }
     }
 
     public HashMap<Integer, Report> getAllReports() {
+        this.getAllReportObjects();
         return allReports;
     }
 
     public HashMap<Integer, BikePart> getAllBikeParts() {
+        this.getAllBikePartObjects();
         return allBikeParts;
     }
 
@@ -133,13 +137,14 @@ public class EBMSDatabase {
             c.moveToFirst();
 
             if (c.getCount() > 0) {
+                this.allReports.clear();
                 // TODO: last idx object is missing
                 while (c.moveToNext()) {
                     this.allReports.put(c.getInt(idIdx), DBObjectConverter.getReportFromJson(c.getString(reportIdx)));
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "getAllReportObjects() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - getAllReportObjects() - Exception: " + e.toString());
         }
     }
 
@@ -153,13 +158,14 @@ public class EBMSDatabase {
             c.moveToFirst();
 
             if (c.getCount() > 0) {
+                this.allBikeParts.clear();
                 // TODO: last idx object is missing
                 while (c.moveToNext()) {
                     this.allBikeParts.put(c.getInt(idIdx), DBObjectConverter.getBikePartFromJson(c.getString(partIdx)));
                 }
             }
         } catch (Exception e) {
-            Log.e(LOG_TAG, "getAllBikePartObjects() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - getAllBikePartObjects() - Exception: " + e.toString());
         }
     }
 
@@ -168,10 +174,9 @@ public class EBMSDatabase {
             String reportJson = DBObjectConverter.convertReportToJson(report);
             this.ebmsDB.execSQL("INSERT INTO reports (report) VALUES ('" + reportJson + "');");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "addReportEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - addReportEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllReportObjects();
         return true;
     }
 
@@ -180,10 +185,9 @@ public class EBMSDatabase {
             String reportJson = DBObjectConverter.convertReportToJson(editedReport);
             this.ebmsDB.execSQL("UPDATE reports SET report='" + reportJson + "' WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "editReportEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - editReportEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllReportObjects();
         return true;
     }
 
@@ -191,10 +195,9 @@ public class EBMSDatabase {
         try {
             this.ebmsDB.execSQL("DELETE FROM reports WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "deleteReportEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - deleteReportEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllReportObjects();
         return true;
     }
 
@@ -203,10 +206,9 @@ public class EBMSDatabase {
             String bikePartJson = DBObjectConverter.convertBikePartToJson(bikePart);
             this.ebmsDB.execSQL("INSERT INTO parts (bikePart) VALUES ('" + bikePartJson + "');");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "addBikePartEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - addBikePartEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllBikePartObjects();
         return true;
     }
 
@@ -215,10 +217,9 @@ public class EBMSDatabase {
             String bikePartJson = DBObjectConverter.convertBikePartToJson(editedBikePart);
             this.ebmsDB.execSQL("UPDATE parts SET bikePart='" + bikePartJson + "' WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "editBikePartEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - editBikePartEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllBikePartObjects();
         return true;
     }
 
@@ -226,11 +227,9 @@ public class EBMSDatabase {
         try {
             this.ebmsDB.execSQL("DELETE FROM parts WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
-            Log.e(LOG_TAG, "deleteBikePartEntry() - Exception: " + e.toString());
+            Log.e(LOG_TAG, "EBMS - EBMSDatabase - deleteBikePartEntry() - Exception: " + e.toString());
             return false;
         }
-        getAllBikePartObjects();
         return true;
     }
-
 }

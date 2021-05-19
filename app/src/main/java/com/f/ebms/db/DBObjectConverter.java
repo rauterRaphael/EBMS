@@ -14,8 +14,7 @@ public class DBObjectConverter {
         return new GsonBuilder().create().toJson(report, Report.class);
     }
 
-    public static Report getReportFromJson(String jsonObject)
-    {
+    public static Report getReportFromJson(String jsonObject) {
         return new Gson().fromJson(jsonObject, Report.class);
     }
 
