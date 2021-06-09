@@ -7,8 +7,15 @@
     <string name="main_btn_statistics">STATISTICS</string>
 
     <string name="newreport_textview_name">Create new report</string>
-    <string name="reportlist_textview_name">Reports</string>
-    <string name="partslist_textview_name">Parts</string>
     <string name="statistics_textview_name">Statistics</string>
+
+    <string name="reportlist_textview_name">Reports</string>
+    <string name="reportlist_dlg_edit_title">Add new part</string>
+
+    <string name="partslist_textview_name">Parts</string>
+    <string name="partslist_btn_addPart">Add Part</string>
+    <string name="partslist_dlg_add_title">Add new part</string>
+    <string name="partslist_dlg_edit_title">Edit part</string>
+
 
 </resources>

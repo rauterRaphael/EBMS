@@ -4,20 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import com.f.ebms.db.EBMSDatabase;
-import com.f.ebms.ui.NewReportActivity;
-import com.f.ebms.ui.PartListActivity;
-import com.f.ebms.ui.ReportListActivity;
-import com.f.ebms.ui.StatisticsActivity;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.f.ebms.ui.newReport.NewReportActivity;
+import com.f.ebms.ui.partsList.PartListActivity;
+import com.f.ebms.ui.reportsList.ReportListActivity;
+import com.f.ebms.ui.statistics.StatisticsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
