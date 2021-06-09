@@ -6,7 +6,18 @@
     <string name="main_btn_parts">PARTS</string>
     <string name="main_btn_statistics">STATISTICS</string>
 
-    <string name="newreport_textview_name">Create new report</string>
+    <string name="newreport_textview_name">New report</string>
+    <string name="newreport_textview_qrCode">QR Code</string>
+    <string name="newreport_textview_employeeName">Employee name:</string>
+    <string name="newreport_textview_licensePlate">License plate:</string>
+    <string name="newreport_textview_kilometerStatus">Kilometer:</string>
+
+    <string name="newreport_aldlg_title">Edit part status</string>
+    <string name="newreport_aldlg_toBeRepaired">To be repaired</string>
+    <string name="newreport_aldlg_finished">Finished</string>
+    <string name="newreport_aldlg_notes">Notes</string>
+
+
     <string name="statistics_textview_name">Statistics</string>
 
     <string name="reportlist_textview_name">Reports</string>
