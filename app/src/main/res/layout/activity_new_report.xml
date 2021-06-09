@@ -6,133 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".ui.newReport.NewReportActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <EditText
+        android:id="@+id/qrCodeET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="@string/newreport_textview_name"
-        android:textSize="20sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/kilometerStatusET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/qrCodeLabel"
+        app:layout_constraintTop_toBottomOf="@+id/licensePlateET" />
 
     <EditText
         android:id="@+id/employeeNameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/licensePlateLabel"
+        app:layout_constraintBottom_toTopOf="@+id/licensePlateET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/qrCodeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/newreport_textview_qrCode"
-        app:layout_constraintBottom_toTopOf="@+id/qrCodeET"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/employeeNameLabel"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/licensePlateET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/qrCodeLabel"
+        app:layout_constraintBottom_toTopOf="@+id/qrCodeET"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/licensePlateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/employeeNameET" />
+
+    <EditText
+        android:id="@+id/kilometerStatusET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="116dp"
+        android:ems="10"
+        android:inputType="numberSigned|number|textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/newReportPartsListRV"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/employeeNameLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/newreport_textview_employeeName"
-        app:layout_constraintBottom_toTopOf="@+id/employeeNameET"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintBottom_toTopOf="@+id/licensePlateLabel"
+        app:layout_constraintEnd_toStartOf="@+id/employeeNameET"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <EditText
-        android:id="@+id/qrCodeET"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/kilometerStatusLabel"
+        android:text="@string/newreport_textview_name"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/employeeNameLabel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/kilometerStatusET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="328dp"
-        android:ems="10"
-        android:inputType="numberSigned|number|textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/qrCodeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newreport_textview_qrCode"
+        app:layout_constraintBottom_toTopOf="@+id/kilometerStatusLabel"
+        app:layout_constraintEnd_toStartOf="@+id/qrCodeET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/licensePlateLabel" />
 
     <TextView
         android:id="@+id/kilometerStatusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="52dp"
         android:text="@string/newreport_textview_kilometerStatus"
-        app:layout_constraintBottom_toTopOf="@+id/kilometerStatusET"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/kilometerStatusET"
+        app:layout_constraintHorizontal_bias="0.98"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/licensePlateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="@string/newreport_textview_licensePlate"
-        app:layout_constraintBottom_toTopOf="@+id/licensePlateET"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/qrCodeLabel"
+        app:layout_constraintEnd_toStartOf="@+id/licensePlateET"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/employeeNameLabel" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newReportPartsListRV"
         android:layout_width="412dp"
-        android:layout_height="227dp"
+        android:layout_height="219dp"
+        android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kilometerStatusET"
-        app:layout_constraintVertical_bias="0.172" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:clickable="true"
+        app:constraint_referenced_ids="licensePlateLabel,employeeNameET,qrCodeET,kilometerStatusET,licensePlateET,employeeNameLabel,kilometerStatusLabel,qrCodeLabel" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="157dp"
+        android:layout_height="47dp"
+        android:layout_marginBottom="16dp"
         android:onClick="addReport"
+        android:text="Add"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Search"
+        app:layout_constraintBottom_toTopOf="@+id/newReportPartsListRV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newReportPartsListRV"
-        app:layout_constraintVertical_bias="0.279"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:layout_constraintTop_toBottomOf="@+id/kilometerStatusET" />
 </androidx.constraintlayout.widget.ConstraintLayout>

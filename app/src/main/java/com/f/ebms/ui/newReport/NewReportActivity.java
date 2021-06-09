@@ -58,13 +58,24 @@ public class NewReportActivity extends AppCompatActivity implements NewReportPar
         String qrCode           = ((EditText) findViewById(R.id.qrCodeET)).getText().toString();
         String kilometerStatus  = ((EditText) findViewById(R.id.kilometerStatusET)).getText().toString();
 
+        if(kilometerStatus.equals(""))
+            kilometerStatus = "0";
+
+        BikePart[] parts = new BikePart[this.bikePartHashMap.size()];
+
+        for(int i=0; i<this.bikePartHashMap.size(); i++){
+            parts[i] = this.bikePartHashMap.get(i);
+        }
+
         Report newReport = new Report(employeeName,
                 qrCode,
                 licensePlate,
                 Integer.parseInt(kilometerStatus),
-                (BikePart[]) this.bikePartHashMap.values().toArray());
+                parts);
         this.ebmsDatabase.addReportEntry(newReport);
-        this.initPartListRecyclerView();
+        Toast.makeText(getApplicationContext(),"Report added",
+                Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private void initPartListRecyclerView(){
@@ -145,27 +156,4 @@ public class NewReportActivity extends AppCompatActivity implements NewReportPar
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
-
-    public void storeReAndUpdateList(String newPartName){
-        Toast.makeText(getApplicationContext(),"Storing new part in database: " + newPartName,
-                Toast.LENGTH_SHORT).show();
-        BikePart newBikePart = new BikePart(newPartName);
-        this.ebmsDatabase.addBikePartEntry(newBikePart);
-        this.initPartListRecyclerView();
-    }
-
-    public void editPartAndUpdateList(int bikePartIdx, String updatedPartName){
-        this.ebmsDatabase.editBikePartEntry(bikePartIdx, new BikePart(updatedPartName));
-        this.initPartListRecyclerView();
-        Toast.makeText(getApplicationContext(),"Part " + updatedPartName + " updated",
-                Toast.LENGTH_SHORT).show();
-    }
-
-    public void deletePartAndUpdateList(int bikePartIdx){
-        this.ebmsDatabase.deleteBikePartEntry(bikePartIdx);
-        this.initPartListRecyclerView();
-        Toast.makeText(getApplicationContext(),"Part deleted",
-                Toast.LENGTH_SHORT).show();
-    }
-
 }
