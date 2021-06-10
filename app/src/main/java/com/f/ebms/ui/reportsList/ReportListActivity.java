@@ -19,7 +19,9 @@ import com.f.ebms.db.dbObjects.BikePart;
 import com.f.ebms.db.dbObjects.Report;
 import com.f.ebms.ui.partsList.PartsRecyclerViewAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,9 +48,10 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
     private void initPartListRecyclerView() {
         HashMap<Integer, Report> reportsHashMap = this.ebmsDatabase.getAllReports();
         ArrayList<String> reports = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 
         for(Map.Entry<Integer, Report> e : reportsHashMap.entrySet()) {
-            reports.add((e.getKey()).toString() + ";" + ((e.getValue())).getLicensePlate() + " " + ((e.getValue())).getReportDateTime());
+            reports.add((e.getKey()).toString() + ";" + ((e.getValue())).getLicensePlate() + " " + dateFormat.format(((e.getValue())).getReportDateTime()));
         }
 
         reportsListRVA = new ReportsRecyclerViewAdapter(this, reports);

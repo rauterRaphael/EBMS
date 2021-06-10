@@ -36,10 +36,26 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/partsListRV"
         android:layout_width="413dp"
-        android:layout_height="452dp"
+        android:layout_height="385dp"
         app:layout_constraintBottom_toTopOf="@+id/partsAddBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <SearchView
+        android:id="@+id/partsSearchSV"
+        android:layout_width="99dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/partsListRV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

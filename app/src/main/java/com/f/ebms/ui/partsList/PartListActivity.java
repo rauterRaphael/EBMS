@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.f.ebms.R;
@@ -30,6 +31,8 @@ public class PartListActivity extends AppCompatActivity  implements PartsRecycle
     private RecyclerView partsRecyclerView;
     private PartsRecyclerViewAdapter partsListRVA;
 
+    private SearchView partsSearchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,22 @@ public class PartListActivity extends AppCompatActivity  implements PartsRecycle
         partsRecyclerView = findViewById(R.id.partsListRV);
         partsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         this.initPartListRecyclerView();
+        this.partsSearchView = findViewById(R.id.partsSearchSV);
+
+        this.partsSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                partsListRVA.filter(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                partsListRVA.filter(newText);
+                return true;
+            }
+        });
+
         Log.i(LOG_TAG, "EBMS - PartListActivity - onCreate() - PartListActivity created");
     }
 

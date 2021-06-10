@@ -10,17 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.f.ebms.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PartsRecyclerViewAdapter extends RecyclerView.Adapter<PartsRecyclerViewAdapter.ViewHolder>{
 
     private final List<String> partsList;
+    private final List<String> partsListCopy;
     private final LayoutInflater layoutInflater;
     private ItemClickListener itemClickListener;
 
     PartsRecyclerViewAdapter(Context context, List<String> data) {
         this.layoutInflater = LayoutInflater.from(context);
         this.partsList = data;
+        this.partsListCopy = new ArrayList<String>(data);
     }
 
     @Override
@@ -67,5 +70,20 @@ public class PartsRecyclerViewAdapter extends RecyclerView.Adapter<PartsRecycler
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public void filter(String searchText) {
+        partsList.clear();
+        if(searchText.isEmpty()){
+            partsList.addAll(partsListCopy);
+        } else{
+            searchText = searchText.toLowerCase();
+            for(String item: partsListCopy){
+                if(item.toLowerCase().contains(searchText)){
+                    partsList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
