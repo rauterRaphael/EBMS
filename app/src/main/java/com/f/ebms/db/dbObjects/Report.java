@@ -16,6 +16,7 @@ public class Report {
 
     private BikePart[] bikePartList;
 
+
     public Report(String employeeName, String qrCode, String licensePlate, int kilometerStatus, BikePart[] storedBikeParts) {
         this.qrCode = qrCode;
         this.employeeName = employeeName;
@@ -59,6 +60,10 @@ public class Report {
 
     public long getReportDateTime() {
         return reportDateTime;
+    }
+
+    public BikePart[] getBikePartList() {
+        return bikePartList;
     }
 
     @Override

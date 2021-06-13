@@ -138,7 +138,6 @@ public class EBMSDatabase {
 
             if (c.getCount() > 0) {
                 this.allReports.clear();
-                // TODO: last idx object is missing
                 while (c.moveToNext()) {
                     this.allReports.put(c.getInt(idIdx), DBObjectConverter.getReportFromJson(c.getString(reportIdx)));
                 }
@@ -159,7 +158,6 @@ public class EBMSDatabase {
 
             if (c.getCount() > 0) {
                 this.allBikeParts.clear();
-                // TODO: last idx object is missing
                 while (c.moveToNext()) {
                     this.allBikeParts.put(c.getInt(idIdx), DBObjectConverter.getBikePartFromJson(c.getString(partIdx)));
                 }
@@ -231,5 +229,20 @@ public class EBMSDatabase {
             return false;
         }
         return true;
+    }
+
+    public Report getReportEntryByIdx(int entryIdx){
+
+        Cursor c = this.ebmsDB.rawQuery("SELECT * FROM reports WHERE ID=" + entryIdx + ";", null);
+
+        int idIdx = c.getColumnIndex("ID");
+        int reportIdx = c.getColumnIndex("report");
+
+        c.moveToFirst();
+
+        if (c.getCount() > 0) {
+             return DBObjectConverter.getReportFromJson(c.getString(reportIdx));
+        }
+        return null;
     }
 }
