@@ -2,19 +2,15 @@ package com.f.ebms.ui.reportsList;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,21 +20,25 @@ import com.f.ebms.R;
 import com.f.ebms.db.EBMSDatabase;
 import com.f.ebms.db.dbObjects.BikePart;
 import com.f.ebms.db.dbObjects.Report;
+import com.f.ebms.ui.ReportViewActivity;
+import com.f.ebms.ui.newReport.NewReportActivity;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfBorderDictionary;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.RadioCheckField;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,18 +83,26 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
         final int reportDBIdx = Integer.parseInt(reportsListRVA.getItem(position).split(";")[0]);
 
         builder.setMessage("Share or delete report").setCancelable(true)
-                .setPositiveButton("Share", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
                         Log.i(LOG_TAG, "Sharing is caring");
                         // create pdf from report
-
+                        Toast.makeText(getApplicationContext(),"Creating the report...",
+                                Toast.LENGTH_SHORT).show();
                         try {
                             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
                             Report tmp = ebmsDatabase.getReportEntryByIdx(reportDBIdx);
                             if(tmp != null)
                             {
+                                String fileName = tmp.getEmployeeName() + "_" + tmp.getLicensePlate() + "_" + dateFormat.format(tmp.getReportDateTime()) + ".pdf";
+
+                                File reportFile = new File(getExternalFilesDir(null), fileName);
+                                if(reportFile.exists())
+                                    reportFile.delete();
+
                                 Document document = new Document();
-                                PdfWriter.getInstance(document, new FileOutputStream(new File(getExternalFilesDir(null), "iTextHelloWorld.pdf")));
+                                PdfWriter.getInstance(document, new FileOutputStream(new File(getExternalFilesDir(null), fileName)));
 
                                 document.open();
                                 document.addAuthor("Raphael Rauter");
@@ -102,7 +110,6 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
                                 document.addTitle("EBMS - report");
 
                                 PdfPTable headerTable = new PdfPTable(3);
-                                headerTable.setPaddingTop(10f);
                                 headerTable.addCell("Datum: " + dateFormat.format(tmp.getReportDateTime()));
                                 headerTable.addCell("Name: " + tmp.getEmployeeName());
                                 headerTable.addCell("Kilometer: " + tmp.getKilometerStatus());
@@ -111,6 +118,9 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
                                 headerTable.addCell("Name: Spongebob");
 
                                 document.add(headerTable);
+
+                                Chunk linebreak = new Chunk(new DottedLineSeparator());
+                                document.add(linebreak);
 
                                 PdfPTable bodyTable = new PdfPTable(4);
                                 bodyTable.setPaddingTop(10f);
@@ -141,13 +151,21 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
 
                                 document.add(bodyTable);
 
+                                document.add(linebreak);
+
                                 PdfPTable footerTable = new PdfPTable(1);
                                 footerTable.setPaddingTop(10f);
                                 footerTable.addCell("Quality Check:             ");
                                 document.add(footerTable);
 
                                 document.close();
-                            }
+
+                                Toast.makeText(getApplicationContext(),"Report saved.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                startViewActivity(fileName);
+
+                             }
 
                         }catch(Exception e){
                             e.printStackTrace();
@@ -170,6 +188,12 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
         alert.show();
     }
 
+    private void startViewActivity(String reportFileNew) {
+        Intent reportViewIntent = new Intent(this, ReportViewActivity.class);
+        reportViewIntent.putExtra("FILE", reportFileNew);
+        startActivity(reportViewIntent);
+    }
+
     private void deleteReportAndUpdateList(int reportIdx) {
         this.ebmsDatabase.deleteReportEntry(reportIdx);
         this.initPartListRecyclerView();
@@ -177,26 +201,68 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
                 Toast.LENGTH_SHORT).show();
     }
 
-    private Image getCheckedImage(){
+    private PdfPTable getCheckedImage(){
         try {
-            InputStream is = this.getResources().openRawResource(R.raw.checked);
+            InputStream is = this.getResources().openRawResource(R.raw.checkedbox);
             Bitmap bmp = BitmapFactory.decodeStream(is);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            return Image.getInstance(stream.toByteArray());
+            Image img = Image.getInstance(stream.toByteArray());
+
+            PdfPTable checkedImgTable = new PdfPTable(3);
+
+            PdfPCell emptyCell = new PdfPCell();
+            emptyCell.setBorder(0);
+
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+
+            PdfPCell imgCell = new PdfPCell(img);
+            imgCell.setBorder(0);
+            checkedImgTable.addCell(imgCell);
+
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+            checkedImgTable.addCell(emptyCell);
+
+            return checkedImgTable;
         }catch (Exception e){
             e.printStackTrace();
         }
         return null;
     }
 
-    private Image getUnCheckedImage(){
+    private PdfPTable getUnCheckedImage(){
         try {
-            InputStream is = this.getResources().openRawResource(R.raw.unchecked);
+            InputStream is = this.getResources().openRawResource(R.raw.uncheckedbox);
             Bitmap bmp = BitmapFactory.decodeStream(is);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            return Image.getInstance(stream.toByteArray());
+            Image img = Image.getInstance(stream.toByteArray());
+
+            PdfPTable uncheckedImgTable = new PdfPTable(3);
+
+            PdfPCell emptyCell = new PdfPCell();
+            emptyCell.setBorder(0);
+
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+
+            PdfPCell imgCell = new PdfPCell(img);
+            imgCell.setBorder(0);
+            uncheckedImgTable.addCell(imgCell);
+
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+            uncheckedImgTable.addCell(emptyCell);
+
+            return uncheckedImgTable;
         }catch (Exception e){
             e.printStackTrace();
         }
