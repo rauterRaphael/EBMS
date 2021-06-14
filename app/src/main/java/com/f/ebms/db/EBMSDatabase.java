@@ -24,6 +24,7 @@ public class EBMSDatabase {
 
     public EBMSDatabase(Context context) {
         try {
+
             this.ebmsDB = context.openOrCreateDatabase("EBMS", Context.MODE_PRIVATE, null);
             this.allReports = new HashMap<Integer, Report>();
             this.allBikeParts = new HashMap<Integer, BikePart>();

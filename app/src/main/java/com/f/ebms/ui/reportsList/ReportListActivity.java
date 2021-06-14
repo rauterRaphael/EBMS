@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,17 +19,12 @@ import com.f.ebms.R;
 import com.f.ebms.db.EBMSDatabase;
 import com.f.ebms.db.dbObjects.BikePart;
 import com.f.ebms.db.dbObjects.Report;
-import com.f.ebms.ui.ReportViewActivity;
-import com.f.ebms.ui.newReport.NewReportActivity;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfBorderDictionary;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.RadioCheckField;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 
 import java.io.ByteArrayOutputStream;
@@ -160,12 +154,19 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
 
                                 document.close();
 
-                                Toast.makeText(getApplicationContext(),"Report saved.",
-                                        Toast.LENGTH_SHORT).show();
+                                String toastText = reportFile.getAbsolutePath();
+                                Toast.makeText(getApplicationContext(),"Report saved at " + toastText,
+                                        Toast.LENGTH_LONG).show();
 
-                                startViewActivity(fileName);
+                                Intent docIntent = new Intent();
+                                docIntent.setAction(Intent.ACTION_SEND);
+                                docIntent.putExtra(Intent.EXTRA_STREAM, reportFile.toURI());
+                                docIntent.setType("application/pdf");
 
-                             }
+                                Intent shareIntent = Intent.createChooser(docIntent, null);
+                                startActivity(shareIntent);
+
+                            }
 
                         }catch(Exception e){
                             e.printStackTrace();
@@ -186,12 +187,6 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
         AlertDialog alert = builder.create();
         alert.setTitle(R.string.reportlist_dlg_edit_title);
         alert.show();
-    }
-
-    private void startViewActivity(String reportFileNew) {
-        Intent reportViewIntent = new Intent(this, ReportViewActivity.class);
-        reportViewIntent.putExtra("FILE", reportFileNew);
-        startActivity(reportViewIntent);
     }
 
     private void deleteReportAndUpdateList(int reportIdx) {

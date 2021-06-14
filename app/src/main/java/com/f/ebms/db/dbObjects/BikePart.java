@@ -1,10 +1,13 @@
 package com.f.ebms.db.dbObjects;
 
 public class BikePart {
+
     private String partName;
+
     private String notes;
 
     private boolean toBeRepaired;
+
     private boolean finished;
 
     public BikePart(String partName) {
