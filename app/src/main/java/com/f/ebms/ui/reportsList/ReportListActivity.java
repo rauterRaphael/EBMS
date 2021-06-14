@@ -80,8 +80,6 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
                 .setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        Log.i(LOG_TAG, "Sharing is caring");
-                        // create pdf from report
                         Toast.makeText(getApplicationContext(),"Creating the report...",
                                 Toast.LENGTH_SHORT).show();
                         try {
@@ -100,7 +98,7 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
 
                                 document.open();
                                 document.addAuthor("Raphael Rauter");
-                                document.addCreator("Spongebot");
+                                document.addCreator("Raphael Rauter");
                                 document.addTitle("EBMS - report");
 
                                 PdfPTable headerTable = new PdfPTable(3);
@@ -109,7 +107,7 @@ public class ReportListActivity extends AppCompatActivity implements ReportsRecy
                                 headerTable.addCell("Kilometer: " + tmp.getKilometerStatus());
                                 headerTable.addCell("Kennzeichen: " + tmp.getLicensePlate());
                                 headerTable.addCell("QR Code: " + tmp.getQrCode());
-                                headerTable.addCell("Name: Spongebob");
+                                headerTable.addCell("Name: ");
 
                                 document.add(headerTable);
 

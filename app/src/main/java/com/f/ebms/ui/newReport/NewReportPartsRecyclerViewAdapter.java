@@ -67,8 +67,7 @@ public class NewReportPartsRecyclerViewAdapter extends RecyclerView.Adapter<NewR
         this.itemClickListener = itemClickListener;
     }
 
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
+   public interface ItemClickListener {
         void onItemClick(View view, int position);
     }
 

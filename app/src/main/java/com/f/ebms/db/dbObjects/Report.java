@@ -30,32 +30,16 @@ public class Report {
         return employeeName;
     }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
     public String getQrCode() {
         return qrCode;
-    }
-
-    public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
     }
 
     public String getLicensePlate() {
         return licensePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
     public int getKilometerStatus() {
         return kilometerStatus;
-    }
-
-    public void setKilometerStatus(int kilometerStatus) {
-        this.kilometerStatus = kilometerStatus;
     }
 
     public long getReportDateTime() {

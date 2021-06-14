@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.f.ebms.db.dbObjects.BikePart;
@@ -168,26 +166,13 @@ public class EBMSDatabase {
         }
     }
 
-    public boolean addReportEntry(Report report) {
+    public void addReportEntry(Report report) {
         try {
             String reportJson = DBObjectConverter.convertReportToJson(report);
             this.ebmsDB.execSQL("INSERT INTO reports (report) VALUES ('" + reportJson + "');");
         } catch (Exception e) {
             Log.e(LOG_TAG, "EBMS - EBMSDatabase - addReportEntry() - Exception: " + e.toString());
-            return false;
         }
-        return true;
-    }
-
-    public boolean editReportEntry(int entryIdx, Report editedReport) {
-        try {
-            String reportJson = DBObjectConverter.convertReportToJson(editedReport);
-            this.ebmsDB.execSQL("UPDATE reports SET report='" + reportJson + "' WHERE ID=" + entryIdx + ";");
-        } catch (Exception e) {
-            Log.e(LOG_TAG, "EBMS - EBMSDatabase - editReportEntry() - Exception: " + e.toString());
-            return false;
-        }
-        return true;
     }
 
     public boolean deleteReportEntry(int entryIdx) {
@@ -200,36 +185,30 @@ public class EBMSDatabase {
         return true;
     }
 
-    public boolean addBikePartEntry(BikePart bikePart) {
+    public void addBikePartEntry(BikePart bikePart) {
         try {
             String bikePartJson = DBObjectConverter.convertBikePartToJson(bikePart);
             this.ebmsDB.execSQL("INSERT INTO parts (bikePart) VALUES ('" + bikePartJson + "');");
         } catch (Exception e) {
             Log.e(LOG_TAG, "EBMS - EBMSDatabase - addBikePartEntry() - Exception: " + e.toString());
-            return false;
         }
-        return true;
     }
 
-    public boolean editBikePartEntry(int entryIdx, BikePart editedBikePart) {
+    public void editBikePartEntry(int entryIdx, BikePart editedBikePart) {
         try {
             String bikePartJson = DBObjectConverter.convertBikePartToJson(editedBikePart);
             this.ebmsDB.execSQL("UPDATE parts SET bikePart='" + bikePartJson + "' WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
             Log.e(LOG_TAG, "EBMS - EBMSDatabase - editBikePartEntry() - Exception: " + e.toString());
-            return false;
         }
-        return true;
     }
 
-    public boolean deleteBikePartEntry(int entryIdx) {
+    public void deleteBikePartEntry(int entryIdx) {
         try {
             this.ebmsDB.execSQL("DELETE FROM parts WHERE ID=" + entryIdx + ";");
         } catch (Exception e) {
             Log.e(LOG_TAG, "EBMS - EBMSDatabase - deleteBikePartEntry() - Exception: " + e.toString());
-            return false;
         }
-        return true;
     }
 
     public Report getReportEntryByIdx(int entryIdx){
